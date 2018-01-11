@@ -20,26 +20,29 @@
           <BreadcrumbItem>任务列表</BreadcrumbItem>
         </Breadcrumb>
         <Card>
-            <Row type="flex" justify="end" align="middle" >
-              <Col span="4">
-              <Button type="primary" shape="circle" icon="plus">创建任务</Button>
-              </Col>
-            </Row>
-            <Row type="flex" justify="center" align="middle" style="margin-top: 10px">
-              <Col span="24">
-              <Table highlight-row ref="currentRowTable" :columns="tableHead" :data="tableData"></Table>
-              </Col>
-            </Row>
+          <Row type="flex" justify="end" align="middle">
+            <Col span="4">
+            <Button type="primary" shape="circle" icon="plus">创建任务</Button>
+            </Col>
+          </Row>
+          <Row type="flex" justify="center" align="middle" style="margin-top: 10px">
+            <Col span="24">
+            <Table highlight-row ref="currentRowTable" :columns="tableHead" :data="tableData"></Table>
+            </Col>
+          </Row>
         </Card>
       </Content>
       <Footer class="layout-footer-center"></Footer>
     </Layout>
+
   </div>
 </template>
 <script>
+  import {mapGetters, mapActions} from 'vuex'
+
   export default {
     name: 'Home',
-    data () {
+    data() {
       return {
         tableHead: [{
           type: 'index',
@@ -71,10 +74,54 @@
         tableData: []
       }
     },
-    computed: {},
-    methods: {},
-    beforeMount () {
-
+    computed: {
+      ...mapGetters([
+        'missions'
+      ])
+    },
+    methods: {
+      ...mapActions([
+        'initMissionList',
+        'removeMission',
+        'updateMission',
+        'addNewMission'
+      ]),
+      // tableData初始化
+      async initTableData() {
+        try {
+          this.tableData = await this.initMissionList()
+        } catch (err) {
+          throw new Error(`tableData init error: ${err}`)
+        }
+      },
+      // 任务列表操作
+      // 创建任务
+      async create(data) {
+        try {
+          await this.addNewMission(data)
+        } catch (err) {
+          throw new Error(`create mission: ${err} `)
+        }
+      },
+      // 删除任务
+      async remove(data) {
+        try {
+          await this.removeMission(data)
+        } catch (err) {
+          throw new Error(`remove mission: ${err}`)
+        }
+      },
+      // 更新任务
+      async update(data) {
+        try {
+          await this.updateMission(data)
+        } catch (err) {
+          throw new Error(`update mission: ${err}`)
+        }
+      }
+    },
+    beforeMount() {
+      this.initTableData()
     }
   }
 </script>

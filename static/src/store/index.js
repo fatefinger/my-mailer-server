@@ -21,17 +21,33 @@ const getters = {
 
 const mutations = {
   /**
-   * set new mission to list
-   * */
-  ['SET_NEW_MISSION'](state, mission) {
+   * set missions
+   * @param state
+   * @param missions(array)
+   */
+  ['SET_MISSIONS'](state, missions) {
+   try {
+     state.missions = missions
+   } catch (err) {
+     console.log(`SET_MISSIONS: ${err}`)
+   }
+  },
+  /**
+   * add new mission to list
+   * @param state
+   * @param mission(object)
+   */
+  ['ADD_NEW_MISSION'](state, mission) {
     try {
       state.missions.push(mission)
     } catch (err) {
-      console.log(`SET_NEW_MISSION: ${err}`)
+      console.log(`ADD_NEW_MISSION: ${err}`)
     }
   },
   /**
    * remove mission
+   * @param state
+   * @param mission(object)
    * */
   ['REMOVE_MISSION'](state, mission) {
     try {
@@ -47,18 +63,110 @@ const mutations = {
   },
   /**
    * update mission
+   * @param state
+   * @param mission(object)
    * */
   ['UPDATE_MISSION'](state, mission) {
     try {
-
+      for (let i = 0; i < state.missions.length; i++) {
+        if (state.missions[i].id === mission.id) {
+          state.missions[i] = mission
+          return
+        }
+      }
     } catch (err) {
       console.log(`UPDATE_MISSION: ${err}`)
     }
   }
-
 }
 
-const actions = {}
+const actions = {
+  /**
+   * init state.missions from server
+   * @param commit
+   * @param state
+   * @returns {Promise<any>}
+   */
+  initMissionList ({commit, state}) {
+    return new Promise((resolve, reject) => {
+      try {
+        /* get missions from server */
+        let data = missionList // mock数据代替
+        commit('SET_MISSIONS', data)
+        resolve(true)
+      } catch (err) {
+        reject(err)
+      }
+    })
+  },
+  /**
+   * remove mission
+   * @param commit
+   * @param state
+   * @param mission(object)
+   * @returns {Promise<any>}
+   */
+  removeMission ({commit, state}, mission) {
+    return new Promise((resolve, reject) => {
+      try {
+      /* delete mission id to server */
+        let data = {
+          state: success,
+          data: payload
+        }
+        commit('REMOVE_MISSION', mission)
+        resolve(true)
+      } catch (err) {
+        reject(err)
+      }
+    })
+  },
+  /**
+   * update mission
+   * @param commit
+   * @param state
+   * @param mission
+   * @returns {Promise<any>}
+   */
+  updateMission ({commit, state}, mission) {
+    return new Promise((resolve, reject) => {
+      try {
+        /* update mission id to server */
+        let data = {
+          state: success,
+          data: mission
+        }
+        commit('UPDATE_MISSION', mission)
+        resolve(true)
+      }catch (err) {
+        reject(err)
+      }
+    })
+  },
+  /**
+   * add new mission to state.missions
+   * @param commit
+   * @param state
+   * @param mission
+   * @returns {Promise<any>}
+   */
+  addNewMission ({commit, state}, mission) {
+      return new Promise((resolve, reject) => {
+        try {
+          /* add mission to server */
+          let data = {
+            state: success,
+            data: mission
+          }
+          commit('ADD_NEW_MISSION', mission)
+          resolve(true)
+        }catch (err) {
+          reject(err)
+        }
+      })
+  }
+
+}
 
 
 const store = new Vuex.Store(
