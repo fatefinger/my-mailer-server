@@ -8,7 +8,7 @@ const mission = {
     /**
      * 数据库创建任务
      * @param  {object} model 用户数据模型
-     * @return {object}       mysql执行结果
+     * @return {object} result      mysql执行结果
      */
     async create ( model ) {
         let result = await dbUtils.insertData( 'mission', model )
@@ -23,7 +23,7 @@ const mission = {
     async getExistOne(options ) {
         let _sql = `
     SELECT * from mission
-      where mail_to="${options.mail_to}" or name="${options.name}"
+      where to="${options.to}" or name="${options.name}"
       limit 1`
         let result = await dbUtils.query( _sql )
         if ( Array.isArray(result) && result.length > 0 ) {

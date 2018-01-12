@@ -3,7 +3,7 @@
  */
 import Vue from 'vue'
 import Vuex from 'vuex'
-import missionList from '../mock/index.js'
+import {missionList} from '../mock/index.js'
 
 Vue.use(Vuex)
 
@@ -26,11 +26,11 @@ const mutations = {
    * @param missions(array)
    */
   ['SET_MISSIONS'](state, missions) {
-   try {
-     state.missions = missions
-   } catch (err) {
-     console.log(`SET_MISSIONS: ${err}`)
-   }
+    try {
+      state.missions = missions
+    } catch (err) {
+      console.log(`SET_MISSIONS: ${err}`)
+    }
   },
   /**
    * add new mission to list
@@ -87,7 +87,7 @@ const actions = {
    * @param state
    * @returns {Promise<any>}
    */
-  initMissionList ({commit, state}) {
+  initMissionList({commit, state}) {
     return new Promise((resolve, reject) => {
       try {
         /* get missions from server */
@@ -106,13 +106,13 @@ const actions = {
    * @param mission(object)
    * @returns {Promise<any>}
    */
-  removeMission ({commit, state}, mission) {
+  removeMission({commit, state}, mission) {
     return new Promise((resolve, reject) => {
       try {
-      /* delete mission id to server */
+        /* delete mission id to server */
         let data = {
           state: success,
-          data: payload
+          data: mission
         }
         commit('REMOVE_MISSION', mission)
         resolve(true)
@@ -128,7 +128,7 @@ const actions = {
    * @param mission
    * @returns {Promise<any>}
    */
-  updateMission ({commit, state}, mission) {
+  updateMission({commit, state}, mission) {
     return new Promise((resolve, reject) => {
       try {
         /* update mission id to server */
@@ -138,7 +138,7 @@ const actions = {
         }
         commit('UPDATE_MISSION', mission)
         resolve(true)
-      }catch (err) {
+      } catch (err) {
         reject(err)
       }
     })
@@ -150,20 +150,20 @@ const actions = {
    * @param mission
    * @returns {Promise<any>}
    */
-  addNewMission ({commit, state}, mission) {
-      return new Promise((resolve, reject) => {
-        try {
-          /* add mission to server */
-          let data = {
-            state: success,
-            data: mission
-          }
-          commit('ADD_NEW_MISSION', mission)
-          resolve(true)
-        }catch (err) {
-          reject(err)
+  addNewMission({commit, state}, mission) {
+    return new Promise((resolve, reject) => {
+      try {
+        /* add mission to server */
+        let data = {
+          state: success,
+          data: mission
         }
-      })
+        commit('ADD_NEW_MISSION', mission)
+        resolve(true)
+      } catch (err) {
+        reject(err)
+      }
+    })
   }
 
 }

@@ -18,7 +18,11 @@ import Vue from 'vue'
 import routers from './router'
 import App from './App'
 import iView from 'iview'
+import store from './store/index.js'
 import 'iview/dist/styles/iview.css'
+import Vuex from 'vuex'
+
+Vue.use(Vuex)
 
 // Vue.use(VueRouter);
 Vue.use(iView)
@@ -31,6 +35,7 @@ Vue.use(iView)
 
 new Vue({
   el: '#app',
+  store,
   router: routers,
   render: h => h(App)
 })

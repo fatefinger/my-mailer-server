@@ -19,7 +19,7 @@ const eventLog = function (err, sqlFile, index) {
 let sqlContentMap = getSqlContentMap()
 
 // 执行建表sql脚本
-const createAllTables = async() =>
+const createAllTables = async () =>
 {
     for (let key in sqlContentMap) {
         let sqlShell = sqlContentMap[key]

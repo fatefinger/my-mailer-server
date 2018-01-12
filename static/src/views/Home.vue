@@ -27,7 +27,7 @@
           </Row>
           <Row type="flex" justify="center" align="middle" style="margin-top: 10px">
             <Col span="24">
-            <Table highlight-row ref="currentRowTable" :columns="tableHead" :data="tableData"></Table>
+            <Table highlight-row ref="currentRowTable" :columns="tableHead" :data="missions"></Table>
             </Col>
           </Row>
         </Card>
@@ -42,7 +42,7 @@
 
   export default {
     name: 'Home',
-    data() {
+    data () {
       return {
         tableHead: [{
           type: 'index',
@@ -57,7 +57,15 @@
           key: 'to'
         }, {
           title: '抄送',
-          key: 'cc'
+          key: 'cc',
+          render: (h, params) => {
+            let arr = []
+            let cc = params.row.cc
+            for (let i = 0; i < cc.length; i++) {
+              arr.push(h('p', cc[i]))
+            }
+            return h('div', arr)
+          }
         }, {
           title: '标题',
           key: 'subject'
@@ -69,7 +77,14 @@
           key: 'createTime'
         }, {
           title: '附件',
-          key: 'attachments'
+          key: 'attachments',
+          render: (h, params) => {
+            let arr = []
+            let attachments = params.row.attachments
+            for (let i = 0; i < attachments.length; i++) {
+              arr.push(h('div', ))
+            }
+          }
         }],
         tableData: []
       }
@@ -87,40 +102,33 @@
         'addNewMission'
       ]),
       // tableData初始化
-      async initTableData() {
+      async initTableData () {
         try {
-          this.tableData = await this.initMissionList()
+          await this.initMissionList()
         } catch (err) {
-          throw new Error(`tableData init error: ${err}`)
+          this.$Message.error(`tableData init error`)
+          throw new Error(err)
         }
       },
       // 任务列表操作
-      // 创建任务
-      async create(data) {
-        try {
-          await this.addNewMission(data)
-        } catch (err) {
-          throw new Error(`create mission: ${err} `)
-        }
-      },
       // 删除任务
-      async remove(data) {
+      async remove (data) {
         try {
           await this.removeMission(data)
         } catch (err) {
-          throw new Error(`remove mission: ${err}`)
+          this.$Message.error(`remove mission: ${err}`)
         }
       },
       // 更新任务
-      async update(data) {
+      async update (data) {
         try {
           await this.updateMission(data)
         } catch (err) {
-          throw new Error(`update mission: ${err}`)
+          this.$Message.error(`update mission: ${err}`)
         }
       }
     },
-    beforeMount() {
+    beforeMount () {
       this.initTableData()
     }
   }
