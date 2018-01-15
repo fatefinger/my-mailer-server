@@ -10,8 +10,8 @@ const mission = {
      * @param  {object} model 用户数据模型
      * @return {object} result      mysql执行结果
      */
-    async create ( model ) {
-        let result = await dbUtils.insertData( 'mission', model )
+    async create (model) {
+        let result = await dbUtils.insertData('mission', model)
         return result
     },
 
@@ -20,13 +20,13 @@ const mission = {
      * @param  {object} options 查找条件参数
      * @return {object|null}        查找结果
      */
-    async getExistOne(options ) {
+    async getExistOneById (options) {
         let _sql = `
     SELECT * from mission
-      where to="${options.to}" or name="${options.name}"
+      where id="${options.id}"
       limit 1`
-        let result = await dbUtils.query( _sql )
-        if ( Array.isArray(result) && result.length > 0 ) {
+        let result = await dbUtils.query(_sql)
+        if (Array.isArray(result) && result.length > 0) {
             result = result[0]
         } else {
             result = null

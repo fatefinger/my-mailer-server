@@ -21,7 +21,7 @@ const config = {
     },
     /* 邮件内容配置 */
 //    图片存储路径
-    pathPicture: './pic'
+    picDirname: './pic'
 
 }
 
