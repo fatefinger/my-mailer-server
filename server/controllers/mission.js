@@ -3,11 +3,23 @@
  */
 module.exports = {
 
+
+    async getMissionList (ctx) {
+        let formData = ctx.request.body
+        let result = {
+            success: false,
+            message: '',
+            data: null
+        }
+
+
+    },
+
     /**
      * 获取任务列表
-     * @param   {obejct} ctx 上下文对象
+     * @param   {object} ctx 上下文对象
      */
-    async getMissionList( ctx ) {
+    async getMission( ctx ) {
         let formData = ctx.request.body
         let result = {
             success: false,
