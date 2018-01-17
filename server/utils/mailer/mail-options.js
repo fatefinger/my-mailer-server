@@ -1,7 +1,7 @@
 /**
  * Created by 杨帆 on 2018/1/15.
  */
-const MailPic = require('mail-pic')
+const MailPic = require('./mail-pic')
 
 class MailOptions {
     constructor() {

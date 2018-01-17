@@ -1,11 +1,11 @@
 /**
  * Created by 杨帆 on 2018/1/12.
  */
-const allConfig = require('/config')
-const MailPic = require('mail-pic')
+const allConfig = require('./../../../config')
+const MailPic = require('./mail-pic')
 const nodemailer = require('nodemailer')
 const schedule = require('node-schedule')
-const MailOptions = require('mail-options')
+const MailOptions = require('./mail-options')
 const hostConfig = allConfig.host
 
 class Mailer {
@@ -129,6 +129,7 @@ class Mailer {
     async send() {
         try {
             let transporter = await nodemailer.createTransport(this.smtpOptions)
+            console.log('transporter init!')
             await this._createTimingMission(() => {
                 transporter.sendMail(this.options, (err, msg) => {
                     if (err) {

@@ -7,11 +7,10 @@ CREATE TABLE   IF NOT EXISTS  mission_info (
   `subject` varchar(255) DEFAULT NULL,
   `text` text DEFAULT NULL,
   `html` text DEFAULT NULL,
-  `attachment` varchar(255) DEFAULT NULL,
-  `send_time` varchar(20) DEFAULT NULL,
-  `create_time` varchar(20) DEFAULT NULL,
-  `modified_time` varchar(20) DEFAULT NULL,
+  `attachment` text DEFAULT NULL,
+  `send_time` varchar(255) DEFAULT NULL,
+  `create_time` varchar(255) DEFAULT NULL,
+  `modified_time` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
-INSERT INTO mission_info set mail_from='15601752941@example.com', mail_to='yangfan@kedacom.com', cc='yangfan@kedacom.com', subject='这是测试', text='这是一封测试邮件', html='<h1>这是测试</h1>';

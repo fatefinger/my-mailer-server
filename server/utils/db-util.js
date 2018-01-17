@@ -81,6 +81,7 @@ let count = function (table) {
     return query(_sql, [table])
 }
 
+
 module.exports = {
     query,
     createTable,
