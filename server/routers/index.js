@@ -3,7 +3,7 @@
  */
 const router = require('koa-router')()
 
-const mission = require('./home')
+const mission = require('./mission')
 // const error = require('./error')
 
 router.use('/mission', mission.routes(), mission.allowedMethods())

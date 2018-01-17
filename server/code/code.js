@@ -3,7 +3,9 @@
  */
 
 const missionCode = {
-    ERROR_EMAIL: '请输入正确的邮箱地址'
+    ERROR_EMAIL: '请输入正确的邮箱地址',
+
+    GET_MISSION_SUCCESS: '获取列表信息成功'
 
 }
 

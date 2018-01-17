@@ -2,6 +2,7 @@
  * Created by 杨帆 on 2018/1/10.
  */
 const dbUtils = require('./../utils/db-util')
+const path = require('path')
 
 const mission = {
 
@@ -11,20 +12,27 @@ const mission = {
      * @return {object} result      mysql执行结果
      */
     async create(model) {
-        return await dbUtils.insertData('mission_info', model)
+        try {
+            return await dbUtils.insertData('mission_info', model)
+        } catch (err) {
+            throw new Error(`${__dirname} ${__filename} : ${err}`)
+        }
     },
     /**
      * 查询所有任务数据
      * @returns {Promise<*>}
      */
     async getAllMissions () {
-        let result = await dbUtils.select('mission_info', '*')
-        if (Array.isArray(result) && result.length > 0) {
-            result = result[0]
-        } else {
-            result = null
+        try {
+            let result = await dbUtils.selectAll('mission_info')
+            console.log(result)
+            if (!(Array.isArray(result) && result.length > 0)) {
+                result = null
+            }
+            return result
+        } catch (err) {
+            throw new Error(`${__dirname} ${__filename} : ${err}`)
         }
-        return result
     },
 
     /**
@@ -33,13 +41,17 @@ const mission = {
      * @returns {Promise<*>}
      */
     async getMissionById (id) {
-        let result = await dbUtils.findDataById('mission_info', id)
-        if (Array.isArray(result) && result.length > 0) {
-            result = result[0]
-        } else {
-            result = null
+        try {
+            let result = await dbUtils.findDataById('mission_info', id)
+            if (Array.isArray(result) && result.length > 0) {
+                result = result[0]
+            } else {
+                result = null
+            }
+            return result
+        } catch (err) {
+            throw new Error(`${__dirname} ${__filename} : ${err}`)
         }
-        return result
     },
 
     /**
@@ -48,13 +60,18 @@ const mission = {
      * @returns {Promise<*>}
      */
     async deleteMissionById (id) {
-        let result = await dbUtils.deleteDataById('mission_info', id)
-        if (Array.isArray(result) && result.length > 0) {
-            result = result[0]
-        } else {
-            result = null
+        try {
+            let result = await dbUtils.deleteDataById('mission_info', id)
+            if (Array.isArray(result) && result.length > 0) {
+                result = result[0]
+            } else {
+                result = null
+            }
+            return result
+        } catch (err) {
+            throw new Error(`${__dirname} ${__filename} : ${err}`)
         }
-        return result
+
     },
 
     /**
@@ -64,13 +81,17 @@ const mission = {
      * @returns {Promise<*>}
      */
     async updateMissionById (value, id) {
-        let result = await dbUtils.updateData('mission_info', value, id)
-        if (Array.isArray(result) && result.length > 0) {
-            result = result[0]
-        } else {
-            result = null
+        try {
+            let result = await dbUtils.updateData('mission_info', value, id)
+            if (Array.isArray(result) && result.length > 0) {
+                result = result[0]
+            } else {
+                result = null
+            }
+            return result
+        } catch (err) {
+            throw new Error()
         }
-        return result
     }
 
 }

@@ -1,74 +1,55 @@
 /**
  * Created by 杨帆 on 2018/1/11.
  */
+const missionService = require('./../services/mission')
+const missionCode = require('./../code/code')
+const path = require('path')
+const Mailer = require('./../utils/mailer/mailer')
+
 module.exports = {
 
-
+    /**
+     * get all missions
+     * @param ctx
+     * @returns {Promise<void>}
+     */
     async getMissionList (ctx) {
-        let formData = ctx.request.body
-        let result = {
-            success: false,
-            message: '',
-            data: null
+        try {
+            let result = {
+                success: false,
+                message: '',
+                data: null
+            }
+
+            let missions = await missionService.getAllMissions()
+
+            result.success = true
+            result.message = missionCode.GET_MISSION_SUCCESS
+            result.data = missions
+            ctx.body = result
+        } catch (err) {
+            throw new Error(err)
         }
-
-
     },
 
-    /**
-     * 获取任务列表
-     * @param   {object} ctx 上下文对象
-     */
-    async getMission( ctx ) {
-        let formData = ctx.request.body
-        let result = {
-            success: false,
-            message: '',
-            data: null
-        }
-
-        let validateResult = missionService.validatorSignUp( formData )
-
-        if ( validateResult.success === false ) {
-            result = validateResult
-            ctx.body = result
-            return
-        }
-
-        let existOne  = await userInfoService.getExistOne(formData)
-        console.log( existOne )
-
-        if ( existOne  ) {
-            if ( existOne .name === formData.userName ) {
-                result.message = userCode.FAIL_USER_NAME_IS_EXIST
-                ctx.body = result
-                return
+    async createMission (ctx) {
+        try {
+            let formData = ctx.request.body
+            let result = {
+                success: false,
+                message: '',
+                data: null
             }
-            if ( existOne .email === formData.email ) {
-                result.message = userCode.FAIL_EMAIL_IS_EXIST
-                ctx.body = result
-                return
-            }
+            console.log(formData)
+
+
+
+
+
+
+        } catch (err) {
+            throw new Error(err)
         }
-
-
-        let userResult = await userInfoService.create({
-            email: formData.email,
-            password: formData.password,
-            name: formData.userName,
-            create_time: new Date().getTime(),
-            level: 1,
-        })
-
-        console.log( userResult )
-
-        if ( userResult && userResult.insertId * 1 > 0) {
-            result.success = true
-        } else {
-            result.message = userCode.ERROR_SYS
-        }
-
-        ctx.body = result
     }
 
 }
