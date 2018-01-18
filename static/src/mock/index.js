@@ -17,5 +17,4 @@ const mission = {
   }]
 }
 
-
 export const missionList = Mock.mock(mission).array

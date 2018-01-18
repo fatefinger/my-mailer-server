@@ -43,19 +43,17 @@ module.exports = {
                 message: '',
                 data: null
             }
-            console.log(formData)
             // 检查输入数据
-            if (!check.checkMissionInput(formData)) {
-                console.log(check.checkMissionInput(formData))
+            try{
+                check.checkMissionInput(formData)
+            } catch (err) {
                 result.message = missionCode.ERROR_MISSION_INPUT
                 ctx.body = result
-                return
             }
 
             let missionData = {
                 from: formData.from,
                 to: formData.to,
-                name: formData.name,
                 cc: formData.cc,
                 subject: formData.subject,
                 text: formData.text,

@@ -22,7 +22,7 @@
         <Card>
           <Row type="flex" justify="end" align="middle">
             <Col span="4">
-            <Button type="primary" shape="circle" icon="plus">创建任务</Button>
+            <Button type="primary" shape="circle" icon="plus" @click="createMission">创建任务</Button>
             </Col>
           </Row>
           <Row type="flex" justify="center" align="middle" style="margin-top: 10px">
@@ -34,7 +34,13 @@
       </Content>
       <Footer class="layout-footer-center"></Footer>
     </Layout>
+    <Modal
+      v-model="modalVisiable"
+      title="新建任务"
+      :loading="loading"
+      @on-ok="submit">
 
+    </Modal>
   </div>
 </template>
 <script>
@@ -77,16 +83,11 @@
           key: 'createTime'
         }, {
           title: '附件',
-          key: 'attachments',
-          render: (h, params) => {
-            let arr = []
-            let attachments = params.row.attachments
-            for (let i = 0; i < attachments.length; i++) {
-              arr.push(h('div', ))
-            }
-          }
+          key: 'attachments'
         }],
-        tableData: []
+        tableData: [],
+        modalVisiable: false,
+        modalLoading: true
       }
     },
     computed: {
@@ -125,6 +126,21 @@
           await this.updateMission(data)
         } catch (err) {
           this.$Message.error(`update mission: ${err}`)
+        }
+      },
+      // 新建任务
+      async createMission () {
+        this.modalVisiable = true
+      },
+      // 表单提交
+      async submit (data) {
+        try {
+          setTimeout(() => {
+            this.modalVisiable = false
+            this.$Message.success('提交成功')
+          }, 5000)
+        } catch (err) {
+          throw new Error(err)
         }
       }
     },

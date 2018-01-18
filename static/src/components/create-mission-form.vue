@@ -1,8 +1,5 @@
 <template>
   <Form ref="missionForm" :model="missionForm" :rules="rules" :label-width="80">
-    <FormItem label="收件人姓名" prop="name">
-      <Input v-model="missionForm.name" placeholder="Enter your name"></Input>
-    </FormItem>
     <FormItem label="E-mail" prop="mail">
       <Input v-model="formValidate.mail" placeholder="Enter your e-mail"></Input>
     </FormItem>
@@ -17,27 +14,31 @@
   import {mapGetters, mapActions} from 'vuex'
 
   export default {
-    name: "add-mission-form",
+    name: "create-mission-form",
     data() {
       return {
         missionForm: {
-          name: '',
+          from: '',
           to: '',
           cc: '',
           subject: '',
-
+          text: '',
+          attachments: ''
         },
       }
     },
+    computed: {
+      ...mapGetters([])
+    },
     methods: {
       ...mapActions([
-        'addNewMission'
+        'createMission'
       ]),
       async submitHandle (data) {
         try {
-          await this.addNewMission(data)
+          await this.createMission(data)
         } catch (err) {
-          this.$Message.error(`addMissionForm submitHandle: ${err} `)
+          this.$Message.error(`createMissionForm submitHandle: ${err} `)
         }
       },
       resetHandle () {
