@@ -21,7 +21,14 @@ import iView from 'iview'
 import store from './store/index.js'
 import 'iview/dist/styles/iview.css'
 import Vuex from 'vuex'
+import VueQuillEditor from 'vue-quill-editor'
 
+// // require styles
+import 'quill/dist/quill.core.css'
+import 'quill/dist/quill.snow.css'
+import 'quill/dist/quill.bubble.css'
+
+Vue.use(VueQuillEditor)
 Vue.use(Vuex)
 
 // Vue.use(VueRouter);

@@ -35,19 +35,23 @@
       <Footer class="layout-footer-center"></Footer>
     </Layout>
     <Modal
+      :width="850"
       v-model="modalVisiable"
       title="新建任务"
-      :loading="loading"
+      :loading="modalLoading"
       @on-ok="submit">
-
+      <create-mission-form></create-mission-form>
     </Modal>
   </div>
 </template>
 <script>
   import {mapGetters, mapActions} from 'vuex'
+  import CreateMissionForm from '../components/create-mission-form'
 
   export default {
+    components: {CreateMissionForm},
     name: 'Home',
+
     data () {
       return {
         tableHead: [{

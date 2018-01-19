@@ -10,12 +10,24 @@ Vue.use(Vuex)
 const debug = process.env.NODE_ENV !== 'production'
 
 const state = {
-  missions: []
+  missions: [],
+  missionForm: {
+    from: '',
+    to: '',
+    cc: [],
+    subject: '',
+    text: '',
+    html: '',
+    attachments: []
+  }
 }
 
 const getters = {
   missions: () => {
     return state.missions
+  },
+  missionForm: () => {
+    return state.missionForm
   }
 }
 
@@ -76,6 +88,19 @@ const mutations = {
       }
     } catch (err) {
       console.log(`UPDATE_MISSION: ${err}`)
+    }
+  },
+  /**
+   * set missionForm
+   * @param state
+   * @param form
+   * @constructor
+   */
+  ['SET_MISSION_FORM'] (state, form) {
+    try {
+      state.missionForm = form
+    } catch (err) {
+      console.log(`SET_MISSION_FORM: ${err}`)
     }
   }
 }
