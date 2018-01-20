@@ -26,11 +26,11 @@ class MailOptions {
 
     /**
      * set to address
-     * @param {string}address eg：'YangFan<yangfan@kedacom.com>' or 'yangfan@kedacom.com' or 'YangFan<yangfan@kedacom.com>, yangfan@kedacom.com'
+     * @param {string}to eg：'YangFan<yangfan@kedacom.com>' or 'yangfan@kedacom.com' or 'YangFan<yangfan@kedacom.com>, yangfan@kedacom.com'
      * @returns {Promise<*>}
      */
-    async setTo(address) {
-        return this.to = address || ''
+    async setTo(to) {
+        return this.to = to || ''
     }
 
     /**
@@ -104,7 +104,7 @@ class MailOptions {
      */
     async insertHtmlText(strtmp) {
         try {
-            return this.html.concat(strtmp)
+            return  this.html += strtmp
         } catch (err) {
             throw new Error(err)
         }

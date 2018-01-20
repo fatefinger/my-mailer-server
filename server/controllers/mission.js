@@ -59,7 +59,7 @@ module.exports = {
                 text: formData.text,
                 html: formData.html,
                 attachments: formData.attachments,
-                sendTime: formData.sendTime
+                sendTime: new Date(formData.sendTime)
             }
             // 创建发送任务
             let mission = new Mailer()

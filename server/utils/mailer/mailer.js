@@ -11,7 +11,7 @@ const hostConfig = allConfig.host
 class Mailer {
     constructor() {
         // email option
-        this.options = new MailOptions()
+        this.options = {}
         // stmp server option
         this.smtpOptions = {
             host: hostConfig.HOST,
@@ -53,10 +53,13 @@ class Mailer {
             this.options = new MailOptions()
             await this.options.setFrom(opt.from)
             await this.options.setTo(opt.to)
-            await this.options.setFrom(opt.cc)
+            await this.options.setCC(opt.cc)
             await this.options.setSubject(opt.subject)
             await this.options.setText(opt.text)
+            await this.options.insertHtmlText(opt.html)
             await this._parseDateToTime(opt.date)
+
+            console.log(this.options)
         } catch (err) {
             throw new Error(err)
         }
@@ -128,11 +131,16 @@ class Mailer {
      */
     async send() {
         try {
-            let transporter = await nodemailer.createTransport(this.smtpOptions)
-            console.log('transporter init!')
+            let transporter = nodemailer.createTransport(this.smtpOptions)
             await this._createTimingMission(() => {
-                transporter.sendMail(this.options, (err, msg) => {
+                const test = {
+                    from: 'yangfan@kedacom.com',
+                    to: '15601752941@163.com',
+                    subject: '测试'
+                }
+                transporter.sendMail(test, (err, msg) => {
                     if (err) {
+                        console.log(this.options)
                         throw new Error(err)
                     } else {
                         console.log(msg)
