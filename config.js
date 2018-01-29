@@ -1,6 +1,7 @@
 /**
  * Created by 杨帆 on 2018/1/8.
  */
+
 const config = {
     /* 服务端口 */
     port: 3001,
@@ -20,8 +21,6 @@ const config = {
         PASSWORD: 'keda%yf'
     },
     /* 邮件内容配置 */
-//    图片存储路径
-    picDirname: './pic'
 
 }
 

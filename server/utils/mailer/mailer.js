@@ -57,6 +57,7 @@ class Mailer {
             await this.options.setSubject(opt.subject)
             await this.options.setText(opt.text)
             await this.options.insertHtmlText(opt.html)
+            await this.options.insertImagesToMail(opt.attachments)
             await this._parseDateToTime(opt.date)
 
             console.log(this.options)

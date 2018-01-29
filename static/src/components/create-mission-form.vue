@@ -26,7 +26,7 @@
     <FormItem label="上传附件" prop="attachments">
       <Upload
         multiple
-        action="//jsonplaceholder.typicode.com/posts/">
+        action="//localhost:3001/upload/">
         <Button type="ghost" icon="ios-cloud-upload-outline">上传附件</Button>
       </Upload>
     </FormItem>

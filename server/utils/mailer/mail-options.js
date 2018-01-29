@@ -75,7 +75,7 @@ class MailOptions {
      *                                              path: '/path/to/file',
      *                                              cid: 'yangfan@kedacom.com' // same cid value as in the html img src
      *                                          }, ...]
-     * @param {array}filelist eg: ['123.png', 'example.png', ...]
+     * @param {array}filelist eg: ['123.png', 'example.png', ...]  图片文件列表
      * @returns {Promise<void>}
      */
     async insertImagesToMail(filelist) {
@@ -99,7 +99,7 @@ class MailOptions {
      *                                              path: '/path/to/file',
      *                                              cid: 'yangfan@kedacom.com' // same cid value as in the html img src
      *                                          }, ...]
-     * @param strtmp
+     * @param strtmp               待插入html文本
      * @returns {Promise<string>}
      */
     async insertHtmlText(strtmp) {
