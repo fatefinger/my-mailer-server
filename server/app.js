@@ -26,7 +26,6 @@ app.use(koaStatic(
     path.join(__dirname, './../static/dist')
 ))
 
-
 // 初始化路由中间件
 app.use(routers.routes()).use(routers.allowedMethods())
 

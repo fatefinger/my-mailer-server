@@ -16,7 +16,7 @@ module.exports = {
                 success: false
             }
 
-            let serverFilePath = path.join( __dirname, '../../static/upload' )
+            let serverFilePath = path.join( __dirname, '../../static/dist/public' )
 
             // 上传文件事件
             result = await upload.uploadPicture( ctx, {
@@ -27,14 +27,6 @@ module.exports = {
 
         } catch (err) {
             throw new Error(err)
-        }
-    },
-
-    async getUploadPicture (ctx) {
-        try {
-
-        } catch (err) {
-
         }
     }
 }

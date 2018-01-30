@@ -42,7 +42,7 @@ function uploadPicture(ctx, options) {
     //     UtilDatetime.parseStampToFormat(null, 'YYYY/MM/DD'))
     let picturePath = path.join(
         __dirname,
-        '../../static/upload')
+        '../../static/dist/public')
 
     console.log(path.sep, picturePath)
     let mkdirResult = mkdirsSync(picturePath)
@@ -99,7 +99,6 @@ function uploadPicture(ctx, options) {
     })
 
 }
-
 
 module.exports = {
     uploadPicture,

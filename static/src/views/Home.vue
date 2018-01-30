@@ -54,6 +54,7 @@
 
     data () {
       return {
+        host: window.location.host,
         tableHead: [{
           type: 'index',
           width: 60,
@@ -87,7 +88,16 @@
           key: 'createTime'
         }, {
           title: '附件',
-          key: 'attachments'
+          key: 'attachments',
+          render: (h, params) => {
+            let attachmentList = []
+            for (let item of params.row.attachments) {
+              attachmentList.push(h('img', {
+                src: `${this.host}/public/${item}`
+              }))
+            }
+            return h('div', attachmentList)
+          }
         }],
         tableData: [],
         modalVisiable: false,
@@ -139,10 +149,8 @@
       // 表单提交
       async submit (data) {
         try {
-          setTimeout(() => {
             this.modalVisiable = false
             this.$Message.success('提交成功')
-          }, 5000)
         } catch (err) {
           throw new Error(err)
         }
@@ -150,6 +158,7 @@
     },
     beforeMount () {
       this.initTableData()
+      console.log(`${this.host}/public/`)
     }
   }
 </script>

@@ -26,9 +26,14 @@
     <FormItem label="上传附件" prop="attachments">
       <Upload
         multiple
+        :on-success="handleSuccess"
         action="//localhost:3001/upload/">
         <Button type="ghost" icon="ios-cloud-upload-outline">上传附件</Button>
       </Upload>
+    </FormItem>
+    <FormItem>
+      <Button type="primary" @click="submitHandle">提 交</Button>
+      <Button type="ghost" style="margin-left: 8px" @click="resetHandle">重置</Button>
     </FormItem>
   </Form>
 </template>
@@ -36,6 +41,7 @@
 <script>
   import {mapGetters, mapActions} from 'vuex'
   import validate from '../rules/index'
+
   const rules = validate.formValidate
 
   export default {
@@ -67,14 +73,15 @@
       ...mapActions([
         'createMission'
       ]),
-      async submitHandle (data) {
+      async submitHandle () {
         try {
-          await this.createMission(data)
+
+          await this.createMission()
         } catch (err) {
           this.$Message.error(`createMissionForm submitHandle: ${err} `)
         }
       },
-      async resetHandle () {
+      resetHandle () {
         try {
           this.missionForm = {
             from: '',
@@ -92,7 +99,7 @@
       },
       // 抄送
       // 添加抄送
-      async ccAdd () {
+      ccAdd () {
         try {
           const form = this.missionForm
           if (form.createCC) {
@@ -104,15 +111,23 @@
         }
       },
       // 删除抄送
-      async ccRemove (event, email) {
+      ccRemove (event, email) {
         try {
           const index = this.missionForm.cc.indexOf(email)
           this.missionForm.cc.splice(index, 1)
         } catch (err) {
           throw new Error(err)
         }
-      }
+      },
 
+      handleSuccess (res, file) {
+        try {
+          this.missionForm.attachments.push(res.data.filename)
+          console.log(this.missionForm.attachments)
+        } catch (err) {
+          throw new Error(err)
+        }
+      }
     }
   }
 </script>
