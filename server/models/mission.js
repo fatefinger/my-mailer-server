@@ -25,13 +25,14 @@ const mission = {
     async getAllMissions () {
         try {
             let result = await dbUtils.selectAll('mission_info')
-            console.log(result)
             if (!(Array.isArray(result) && result.length > 0)) {
                 result = null
             }
+            console.log('getAllMissions model success!')
             return result
         } catch (err) {
-            throw new Error(`${__dirname} ${__filename} : ${err}`)
+            console.log(`model getAllMissions error`)
+            throw new Error(err)
         }
     },
 

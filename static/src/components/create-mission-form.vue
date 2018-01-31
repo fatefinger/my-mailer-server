@@ -6,6 +6,9 @@
     <FormItem label="收件人邮箱" prop="to">
       <Input v-model="missionForm.to"></Input>
     </FormItem>
+    <FormItem label="发送时间" prop="sendTime">
+      <TimePicker type="time" placeholder="选择发送时间" style="width: 168px" v-model="missionForm.sendTime"></TimePicker>
+    </FormItem>
     <FormItem label="抄送" prop="createCC">
       <Input v-model="missionForm.createCC"></Input>
       <Button icon="ios-plus-empty" type="dashed" size="small" @click="ccAdd">添加抄送</Button>
@@ -51,6 +54,7 @@
         missionForm: {
           from: '',
           to: '',
+          sendTime: '',
           cc: [],
           subject: '',
           text: '',
@@ -75,8 +79,7 @@
       ]),
       async submitHandle () {
         try {
-
-          await this.createMission()
+          if (await this.createMission(this.missionForm)) this.$Modal.remove()
         } catch (err) {
           this.$Message.error(`createMissionForm submitHandle: ${err} `)
         }
@@ -86,6 +89,7 @@
           this.missionForm = {
             from: '',
             to: '',
+            sendTime: '',
             cc: [],
             subject: '',
             text: '',

@@ -7,10 +7,12 @@ const convert = require('koa-convert')
 const koaStatic = require('koa-static')
 const bodyParser = require('koa-bodyparser')
 const koaLogger = require('koa-logger')
+const InitService = require('./middlewares/init-service')
 
 const config = require('./../config')
 const routers = require('./routers/index')
-
+// 初始化发送列表
+InitService.initMissions()
 
 const app = new Koa()
 
@@ -25,6 +27,9 @@ app.use(bodyParser())
 app.use(koaStatic(
     path.join(__dirname, './../static/dist')
 ))
+
+// 初始化任务列表
+// app.use(InitService.initMissions())
 
 // 初始化路由中间件
 app.use(routers.routes()).use(routers.allowedMethods())

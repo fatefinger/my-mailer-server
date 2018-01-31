@@ -4,7 +4,7 @@
 const missionService = require('./../services/mission')
 const missionCode = require('./../code/code')
 const path = require('path')
-const Mailer = require('./../utils/mailer/mailer')
+const Mailer = require('./../utils/mailer')
 const check = require('./../utils/check')
 
 module.exports = {

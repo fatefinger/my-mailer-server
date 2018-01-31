@@ -21,7 +21,6 @@ const mission = {
      */
     async create(mission) {
         try {
-            console.log(Array.isArray(mission.cc))
             let result = {
                 mail_from: mission.from,
                 mail_to: mission.to,
@@ -34,7 +33,6 @@ const mission = {
                 create_time: new Date(),
                 modified_time: new Date()
             }
-            console.log(result)
             return await missionModel.create(result)
         } catch (err) {
             throw new Error(err)
@@ -57,7 +55,7 @@ const mission = {
                 subject: resultData.subject,
                 text: resultData.text,
                 html: resultData.html,
-                attachments: resultData.attachment ? null : Format.stringToObjectArray.call(this, resultData.attachment),
+                attachments: resultData.attachment === '' ? [] : Format.stringToObjectArray.call(this, resultData.attachment),
                 sendTime: resultData.send_time,
                 createTime: resultData.create_time,
                 modifiedTime: resultData.modified_time
@@ -74,8 +72,8 @@ const mission = {
      */
     async getAllMissions() {
         try {
-            let resultData = await missionModel.getAllMissions() || {}
-            return Array.prototype.map.call(resultData, (item) => {
+            let missionsData = await missionModel.getAllMissions() || {}
+            return Array.prototype.map.call(missionsData, (item) => {
                 return {
                     id: item.id,
                     from: item.mail_from,
@@ -84,7 +82,7 @@ const mission = {
                     subject: item.subject,
                     text: item.text,
                     html: item.html,
-                    attachments: item.attachment === null? null : Format.stringToObjectArray(item.attachment),
+                    attachments: item.attachment === '' ? [] : Format.stringToObjectArray(item.attachment),
                     sendTime: item.send_time,
                     createTime: item.create_time,
                     modifiedTime: item.modified_time

@@ -4,6 +4,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import {missionList} from '../mock/index.js'
+import api from '../api/index.js'
 
 Vue.use(Vuex)
 
@@ -37,9 +38,10 @@ const mutations = {
    * @param state
    * @param missions(array)
    */
-  ['SET_MISSIONS'] (state, missions) {
+  ['SET_MISSIONS'](state, missions) {
     try {
-      state.missions = missions
+      state.missions = Array.from(missions)
+      console.log(state.missions)
     } catch (err) {
       console.log(`SET_MISSIONS: ${err}`)
     }
@@ -49,7 +51,7 @@ const mutations = {
    * @param state
    * @param mission(object)
    */
-  ['CREATE_MISSION'] (state, mission) {
+  ['CREATE_MISSION'](state, mission) {
     try {
       state.missions.push(mission)
     } catch (err) {
@@ -61,7 +63,7 @@ const mutations = {
    * @param state
    * @param mission(object)
    * */
-  ['REMOVE_MISSION'] (state, mission) {
+  ['REMOVE_MISSION'](state, mission) {
     try {
       for (let i = 0; i < state.missions.length; i++) {
         if (state.missions[i].id === mission.id) {
@@ -78,7 +80,7 @@ const mutations = {
    * @param state
    * @param mission(object)
    * */
-  ['UPDATE_MISSION'] (state, mission) {
+  ['UPDATE_MISSION'](state, mission) {
     try {
       for (let i = 0; i < state.missions.length; i++) {
         if (state.missions[i].id === mission.id) {
@@ -96,7 +98,7 @@ const mutations = {
    * @param form
    * @constructor
    */
-  ['SET_MISSION_FORM'] (state, form) {
+  ['SET_MISSION_FORM'](state, form) {
     try {
       state.missionForm = form
     } catch (err) {
@@ -112,62 +114,59 @@ const actions = {
    * @param state
    * @returns {Promise<any>}
    */
-  initMissionList ({commit, state}) {
-    return new Promise((resolve, reject) => {
+ async initMissionList({commit, state}) {
       try {
-        /* get missions from server */
-        let data = missionList // mock数据代替
+        let res = await api.getMissionList()
+        let data = res.data
         commit('SET_MISSIONS', data)
-        resolve(true)
       } catch (err) {
-        reject(err)
+        throw new Error(err)
       }
-    })
   },
-  /**
-   * remove mission
-   * @param commit
-   * @param state
-   * @param mission(object)
-   * @returns {Promise<any>}
-   */
-  removeMission ({commit, state}, mission) {
-    return new Promise((resolve, reject) => {
-      try {
-        /* delete mission id to server */
-        let data = {
-          state: 'success',
-          data: mission
-        }
-        commit('REMOVE_MISSION', data.data)
-        resolve(true)
-      } catch (err) {
-        reject(err)
-      }
-    })
-  },
-  /**
-   * update mission
-   * @param commit
-   * @param state
-   * @param mission
-   * @returns {Promise<any>}
-   */
-  updateMission ({commit, state}, mission) {
-    return new Promise((resolve, reject) => {
-      try {
-        /* update mission id to server */
-        let data = {
-          state: 'success',
-          data: mission
-        }
-        commit('UPDATE_MISSION', data.data)
-        resolve(true)
-      } catch (err) {
-        reject(err)
-      }
-    })
-  },
+  // /**
+  //  * remove mission
+  //  * @param commit
+  //  * @param state
+  //  * @param mission(object)
+  //  * @returns {Promise<any>}
+  //  */
+  // removeMission({commit, state}, mission) {
+  //   return new Promise((resolve, reject) => {
+  //     try {
+  //       /* delete mission id to server */
+  //       let data = {
+  //         state: 'success',
+  //         data: mission
+  //       }
+  //       commit('REMOVE_MISSION', data.data)
+  //       resolve(true)
+  //     } catch (err) {
+  //       reject(err)
+  //     }
+  //   })
+  // },
+  // /**
+  //  * update mission
+  //  * @param commit
+  //  * @param state
+  //  * @param mission
+  //  * @returns {Promise<any>}
+  //  */
+  // updateMission({commit, state}, mission) {
+  //   return new Promise((resolve, reject) => {
+  //     try {
+  //       /* update mission id to server */
+  //       let data = {
+  //         state: 'success',
+  //         data: mission
+  //       }
+  //       commit('UPDATE_MISSION', data.data)
+  //       resolve(true)
+  //     } catch (err) {
+  //       reject(err)
+  //     }
+  //   })
+  // },
   /**
    * add new mission to state.missions
    * @param commit
@@ -175,20 +174,14 @@ const actions = {
    * @param mission
    * @returns {Promise<any>}
    */
-  createMission ({commit, state}, mission) {
-    return new Promise((resolve, reject) => {
+  async createMission({commit, state}, mission) {
       try {
-        /* add mission to server */
-        let data = {
-          state: 'success',
-          data: mission
-        }
+        let res = await api.createMission(mission)
+        let data = res.data
         commit('CREATE_MISSION', data.data)
-        resolve(true)
       } catch (err) {
-        reject(err)
+        console.log(`createMission Error: ${err}`)
       }
-    })
   }
 
 }

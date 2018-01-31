@@ -38,8 +38,7 @@
       :width="850"
       v-model="modalVisiable"
       title="新建任务"
-      :loading="modalLoading"
-      @on-ok="submit">
+      :loading="modalLoading">
       <create-mission-form></create-mission-form>
     </Modal>
   </div>
@@ -59,10 +58,6 @@
           type: 'index',
           width: 60,
           align: 'center'
-        }, {
-          title: '收件人',
-          width: 100,
-          key: 'name'
         }, {
           title: '收件人地址',
           key: 'to'
@@ -90,13 +85,16 @@
           title: '附件',
           key: 'attachments',
           render: (h, params) => {
-            let attachmentList = []
-            for (let item of params.row.attachments) {
-              attachmentList.push(h('img', {
-                src: `${this.host}/public/${item}`
-              }))
+            let res = params.row.attachments
+            if (res.isArray && res.length !== 0) {
+              let attachmentList = []
+              for (let item of res) {
+                attachmentList.push(h('img', {
+                  src: `${this.host}/public/${item}`
+                }))
+              }
+              return h('div', attachmentList)
             }
-            return h('div', attachmentList)
           }
         }],
         tableData: [],
@@ -121,7 +119,6 @@
         try {
           await this.initMissionList()
         } catch (err) {
-          this.$Message.error(`tableData init error`)
           throw new Error(err)
         }
       },
@@ -147,14 +144,14 @@
         this.modalVisiable = true
       },
       // 表单提交
-      async submit (data) {
-        try {
-            this.modalVisiable = false
-            this.$Message.success('提交成功')
-        } catch (err) {
-          throw new Error(err)
-        }
-      }
+      // async submit (data) {
+      //   try {
+      //       this.modalVisiable = false
+      //       this.$Message.success('提交成功')
+      //   } catch (err) {
+      //     throw new Error(err)
+      //   }
+      // }
     },
     beforeMount () {
       this.initTableData()

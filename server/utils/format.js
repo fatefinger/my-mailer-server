@@ -33,12 +33,16 @@ const Format = {
      * @return {any[]}                                                                }]
      */
     stringToObjectArray(string) {
+        console.log(typeof string)
         try {
-            let temp = string.split('$$')
-            return temp.map((item) => {
-                return JSON.parse(item)
-            })
+            if (typeof string === 'string') {
+                let temp = string.split('$$')
+                return temp.map((item) => {
+                    return JSON.parse(item)
+                })
+            }
         } catch (err) {
+            console.log(`StringToObjectArray ERROR:${err}`)
             throw new Error(err)
         }
     }
