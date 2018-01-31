@@ -38,7 +38,7 @@ const mutations = {
    * @param state
    * @param missions(array)
    */
-  ['SET_MISSIONS'](state, missions) {
+  ['SET_MISSIONS'] (state, missions) {
     try {
       state.missions = Array.from(missions)
       console.log(state.missions)
@@ -51,7 +51,7 @@ const mutations = {
    * @param state
    * @param mission(object)
    */
-  ['CREATE_MISSION'](state, mission) {
+  ['CREATE_MISSION'] (state, mission) {
     try {
       state.missions.push(mission)
     } catch (err) {
@@ -63,7 +63,7 @@ const mutations = {
    * @param state
    * @param mission(object)
    * */
-  ['REMOVE_MISSION'](state, mission) {
+  ['REMOVE_MISSION'] (state, mission) {
     try {
       for (let i = 0; i < state.missions.length; i++) {
         if (state.missions[i].id === mission.id) {
@@ -80,7 +80,7 @@ const mutations = {
    * @param state
    * @param mission(object)
    * */
-  ['UPDATE_MISSION'](state, mission) {
+  ['UPDATE_MISSION'] (state, mission) {
     try {
       for (let i = 0; i < state.missions.length; i++) {
         if (state.missions[i].id === mission.id) {
@@ -98,7 +98,7 @@ const mutations = {
    * @param form
    * @constructor
    */
-  ['SET_MISSION_FORM'](state, form) {
+  ['SET_MISSION_FORM'] (state, form) {
     try {
       state.missionForm = form
     } catch (err) {
@@ -114,14 +114,14 @@ const actions = {
    * @param state
    * @returns {Promise<any>}
    */
- async initMissionList({commit, state}) {
-      try {
-        let res = await api.getMissionList()
-        let data = res.data
-        commit('SET_MISSIONS', data)
-      } catch (err) {
-        throw new Error(err)
-      }
+  async initMissionList ({commit, state}) {
+    try {
+      let res = await api.getMissionList()
+      let data = res.data
+      commit('SET_MISSIONS', data)
+    } catch (err) {
+      throw new Error(err)
+    }
   },
   // /**
   //  * remove mission
@@ -174,14 +174,14 @@ const actions = {
    * @param mission
    * @returns {Promise<any>}
    */
-  async createMission({commit, state}, mission) {
-      try {
-        let res = await api.createMission(mission)
-        let data = res.data
-        commit('CREATE_MISSION', data.data)
-      } catch (err) {
-        console.log(`createMission Error: ${err}`)
-      }
+  async createMission ({commit, state}, mission) {
+    try {
+      let res = await api.createMission(mission)
+      let data = res.data
+      commit('CREATE_MISSION', data.data)
+    } catch (err) {
+      console.log(`createMission Error: ${err}`)
+    }
   }
 
 }

@@ -213,15 +213,12 @@ class Mailer {
      */
     async _parseDateToTime(date) {
         try {
-            console.log(date)
             let temp = new Date(date)
-            console.log(temp)
             this.time = {
                 hour: temp.getHours(),
                 minute: temp.getMinutes(),
                 second: temp.getSeconds()
             }
-            console.log(this.time)
         }
         catch (err) {
             throw new Error(err)

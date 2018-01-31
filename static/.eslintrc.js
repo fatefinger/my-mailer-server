@@ -22,6 +22,7 @@ module.exports = {
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-new': 'off',
-    'no-useless-computed-key': 'off'
+    'no-useless-computed-key': 'off',
+    'no-unused-vars': 'off'
   }
 }

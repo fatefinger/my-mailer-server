@@ -38,8 +38,9 @@
       :width="850"
       v-model="modalVisiable"
       title="新建任务"
-      :loading="modalLoading">
+      @submit="this.modalVisiable = false">
       <create-mission-form></create-mission-form>
+      <div slot="footer"></div>
     </Modal>
   </div>
 </template>
@@ -77,7 +78,11 @@
           key: 'subject'
         }, {
           title: '发送时间',
-          key: 'sendTime'
+          key: 'sendTime',
+          render: (h, params) => {
+            let time = new Date(params.row.sendTime)
+            return h('p', time.toLocaleTimeString())
+          }
         }, {
           title: '创建时间',
           key: 'createTime'
@@ -85,21 +90,27 @@
           title: '附件',
           key: 'attachments',
           render: (h, params) => {
-            let res = params.row.attachments
-            if (res.isArray && res.length !== 0) {
+            let res = Array.from(params.row.attachments)
+            if (res.length !== 0) {
               let attachmentList = []
               for (let item of res) {
                 attachmentList.push(h('img', {
-                  src: `${this.host}/public/${item}`
+                  attrs: {
+                    src: `//${this.host}/public/${item}`
+                  },
+                  style: {
+                    width: '60px'
+                  }
                 }))
               }
-              return h('div', attachmentList)
+              return h('div', {
+                style: 'display: inline-block'
+              }, attachmentList)
             }
           }
         }],
         tableData: [],
-        modalVisiable: false,
-        modalLoading: true
+        modalVisiable: false
       }
     },
     computed: {

@@ -19,9 +19,9 @@
     <FormItem label="邮件标题" prop="subject">
       <Input v-model="missionForm.subject"></Input>
     </FormItem>
-    <FormItem label="邮件正文" prop="text">
-      <Input v-model="missionForm.text" type="textarea" :rows="4"></Input>
-    </FormItem>
+    <!--<FormItem label="邮件正文" prop="text">-->
+      <!--<Input v-model="missionForm.text" type="textarea" :rows="4"></Input>-->
+    <!--</FormItem>-->
     <FormItem label="html内容" prop="html">
       <quill-editor v-model="missionForm.html">
       </quill-editor>
@@ -79,7 +79,8 @@
       ]),
       async submitHandle () {
         try {
-          if (await this.createMission(this.missionForm)) this.$Modal.remove()
+          await this.createMission(this.missionForm)
+          this.$emit('submit')
         } catch (err) {
           this.$Message.error(`createMissionForm submitHandle: ${err} `)
         }
