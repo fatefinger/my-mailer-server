@@ -38,9 +38,10 @@
       :width="850"
       v-model="modalVisiable"
       title="新建任务"
-      @submit="this.modalVisiable = false">
-      <create-mission-form></create-mission-form>
-      <div slot="footer"></div>
+      :mask-closable="false"
+      :closable="false"
+      :footerHide="true">
+      <create-mission-form @submitOk="close" @cancel="close"></create-mission-form>
     </Modal>
   </div>
 </template>
@@ -110,8 +111,7 @@
           }
         }],
         tableData: [],
-        modalVisiable: false
-      }
+        modalVisiable: false}
     },
     computed: {
       ...mapGetters([
@@ -154,15 +154,10 @@
       async createMission () {
         this.modalVisiable = true
       },
-      // 表单提交
-      // async submit (data) {
-      //   try {
-      //       this.modalVisiable = false
-      //       this.$Message.success('提交成功')
-      //   } catch (err) {
-      //     throw new Error(err)
-      //   }
-      // }
+      // 关闭模态框
+      async close () {
+        this.modalVisiable = false
+      }
     },
     beforeMount () {
       this.initTableData()

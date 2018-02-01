@@ -20,7 +20,7 @@
       <Input v-model="missionForm.subject"></Input>
     </FormItem>
     <!--<FormItem label="邮件正文" prop="text">-->
-      <!--<Input v-model="missionForm.text" type="textarea" :rows="4"></Input>-->
+    <!--<Input v-model="missionForm.text" type="textarea" :rows="4"></Input>-->
     <!--</FormItem>-->
     <FormItem label="html内容" prop="html">
       <quill-editor v-model="missionForm.html">
@@ -34,9 +34,9 @@
         <Button type="ghost" icon="ios-cloud-upload-outline">上传附件</Button>
       </Upload>
     </FormItem>
-    <FormItem>
-      <Button type="primary" @click="submitHandle">提 交</Button>
-      <Button type="ghost" style="margin-left: 8px" @click="resetHandle">重置</Button>
+    <FormItem labelPosition="top">
+      <Button type="primary" @click="submitHandle" size="large">提 交</Button>
+      <Button type="ghost" @click="cancelHandle" size="large">取 消</Button>
     </FormItem>
   </Form>
 </template>
@@ -49,7 +49,12 @@
 
   export default {
     name: 'CreateMissionForm',
-    data () {
+    props: {
+      newModal: {
+        default: true
+      }
+    },
+    data() {
       return {
         missionForm: {
           from: '',
@@ -77,16 +82,25 @@
       ...mapActions([
         'createMission'
       ]),
-      async submitHandle () {
+      async submitHandle() {
         try {
           await this.createMission(this.missionForm)
-          this.$emit('submit')
+          this.$emit('submitOk')
         } catch (err) {
           this.$Message.error(`createMissionForm submitHandle: ${err} `)
         }
       },
-      resetHandle () {
+      async cancelHandle () {
         try {
+          this.$emit('cancel')
+          await this.resetHandle()
+        } catch (err) {
+          this.$Message.error(`createMissionForm submitHandle: ${err} `)
+        }
+      },
+      async resetHandle() {
+        try {
+          this.$refs['missionForm'].resetFields()
           this.missionForm = {
             from: '',
             to: '',
@@ -104,7 +118,7 @@
       },
       // 抄送
       // 添加抄送
-      ccAdd () {
+      ccAdd() {
         try {
           const form = this.missionForm
           if (form.createCC) {
@@ -116,7 +130,7 @@
         }
       },
       // 删除抄送
-      ccRemove (event, email) {
+      ccRemove(event, email) {
         try {
           const index = this.missionForm.cc.indexOf(email)
           this.missionForm.cc.splice(index, 1)
@@ -125,7 +139,7 @@
         }
       },
 
-      handleSuccess (res, file) {
+      handleSuccess(res, file) {
         try {
           this.missionForm.attachments.push(res.data.filename)
           console.log(this.missionForm.attachments)
