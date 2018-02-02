@@ -50,8 +50,8 @@ module.exports = exports = config
 C:\Users\杨帆\WebstormProjects\my-mailer-server>npm install
 ```
 ## 运行
+###  不使用npm
 1. 先执行init目录下的index.js文件来初始化数据库
-
 ```
 C:\Users\杨帆\WebstormProjects\my-mailer-server>node ./init/index.js
 ```
@@ -60,6 +60,23 @@ C:\Users\杨帆\WebstormProjects\my-mailer-server>node ./init/index.js
 C:\Users\杨帆\WebstormProjects\my-mailer-server>node ./server/app.js
 ```
 3. 登录 http://localhost:3001 即可看到控制台主页
+
+
+### 使用npm
+``` bash
+# install dependencies
+npm install
+
+# init sql 
+npm run init_sql
+
+# develop mode
+npm run dev_server
+
+# start
+npm run start_server
+
+```
 ## 开发
 如果要在此项目的基础上进行开发，需要安装前端依赖文件。
 
