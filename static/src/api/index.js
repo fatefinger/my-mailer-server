@@ -82,6 +82,34 @@ const api = {
         return checkCode(res)
       }
     )
+  },
+  /**
+   * 根据id删除任务
+   * @return {Promise<AxiosResponse<any>>}
+   */
+  removeMission (id) {
+    return axios.delete(`/mission/${id}`).then((response) => {
+      return checkStatus(response)
+    }).then((res) => {
+      return checkCode(res)
+    }).catch((err) => {
+      throw new Error(err)
+    })
+  },
+  /**
+   * 更新任务信息
+   * @param data
+   * @return {Promise<AxiosResponse<any>>}
+   */
+  updateMission (data) {
+    let id = data.id
+    return axios.put(`/mission/${id}`, data).then((response) => {
+      return checkStatus(response)
+    }).then((res) => {
+      return checkCode(res)
+    }).catch((err) => {
+      throw new Error(err)
+    })
   }
 }
 

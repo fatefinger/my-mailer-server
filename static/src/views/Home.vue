@@ -109,6 +109,26 @@
               }, attachmentList)
             }
           }
+        }, {
+          title: '选项',
+          render: (h) => {
+            return h ('div',[h('Button', {
+              on: {
+                click: this.editHandle
+              },
+              props: {
+                type: 'info'
+              },
+              style: 'margin-right: 20px',
+            }, '修改'), h('Button', {
+              on: {
+                click: this.removeHandle
+              },
+              props: {
+                type: 'error'
+              }
+            }, '删除')] )
+          }
         }],
         tableData: [],
         modalVisiable: false}
@@ -157,6 +177,12 @@
       // 关闭模态框
       async close () {
         this.modalVisiable = false
+      },
+      async editHandle () {
+
+      },
+      async removeHandle () {
+
       }
     },
     beforeMount () {

@@ -61,12 +61,12 @@ const mutations = {
   /**
    * remove mission
    * @param state
-   * @param mission(object)
+   * @param {number}id
    * */
-  ['REMOVE_MISSION'] (state, mission) {
+  ['REMOVE_MISSION'] (state, id) {
     try {
       for (let i = 0; i < state.missions.length; i++) {
-        if (state.missions[i].id === mission.id) {
+        if (state.missions[i].id === id) {
           state.missions.splice(i, 1)
           return
         }
@@ -123,50 +123,42 @@ const actions = {
       throw new Error(err)
     }
   },
-  // /**
-  //  * remove mission
-  //  * @param commit
-  //  * @param state
-  //  * @param mission(object)
-  //  * @returns {Promise<any>}
-  //  */
-  // removeMission({commit, state}, mission) {
-  //   return new Promise((resolve, reject) => {
-  //     try {
-  //       /* delete mission id to server */
-  //       let data = {
-  //         state: 'success',
-  //         data: mission
-  //       }
-  //       commit('REMOVE_MISSION', data.data)
-  //       resolve(true)
-  //     } catch (err) {
-  //       reject(err)
-  //     }
-  //   })
-  // },
-  // /**
-  //  * update mission
-  //  * @param commit
-  //  * @param state
-  //  * @param mission
-  //  * @returns {Promise<any>}
-  //  */
-  // updateMission({commit, state}, mission) {
-  //   return new Promise((resolve, reject) => {
-  //     try {
-  //       /* update mission id to server */
-  //       let data = {
-  //         state: 'success',
-  //         data: mission
-  //       }
-  //       commit('UPDATE_MISSION', data.data)
-  //       resolve(true)
-  //     } catch (err) {
-  //       reject(err)
-  //     }
-  //   })
-  // },
+  /**
+   * remove mission
+   * @param commit
+   * @param state
+   * @param mission(object)
+   * @returns {Promise<any>}
+   */
+  async removeMission({commit, state}, mission) {
+    return new Promise((resolve, reject) => {
+      try {
+        let res = await api.removeMission(mission.id)
+        commit('REMOVE_MISSION', mission.id)
+        resolve(true)
+      } catch (err) {
+        reject(err)
+      }
+    })
+  },
+  /**
+   * update mission
+   * @param commit
+   * @param state
+   * @param mission
+   * @returns {Promise<any>}
+   */
+  async updateMission({commit, state}, mission) {
+    return new Promise((resolve, reject) => {
+      try {
+        let res = await api.updateMission(mission)
+        commit('UPDATE_MISSION', mission)
+        resolve(true)
+      } catch (err) {
+        reject(err)
+      }
+    })
+  },
   /**
    * add new mission to state.missions
    * @param commit

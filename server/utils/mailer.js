@@ -88,7 +88,7 @@ class MailOptions {
 
     /**
      * set text
-     * @param str
+     * @param {string}str
      * @returns {Promise<*>}
      */
     async setText (str) {
@@ -169,6 +169,7 @@ class Mailer {
         //    schedule rule
         this.rule = new schedule.RecurrenceRule()
         this.filelist = []
+        this.timingMission = {}
     }
 
     /**
@@ -269,13 +270,48 @@ class Mailer {
     }
 
     /**
+     * get timing mission
+     * @return {Promise<*>}
+     */
+    async getTimingMission () {
+        try {
+            if (Object.keys(this.timingMission).length > 0) {
+                return this.timingMission
+            } else {
+             return false
+            }
+        } catch (err) {
+            console.log('Error: getTimingMission')
+            throw new Error(err)
+        }
+    }
+
+    /**
+     * cancel timing mission
+     * @return {Promise<boolean>}
+     */
+    async cancelTimingMission () {
+        try {
+            if (Object.keys(this.timingMission).length > 0) {
+                return this.timingMission.cancel()
+            } else {
+                console.log('no exist timing mission')
+                return false
+            }
+        } catch (err) {
+            console.log('Error: cancelTimingMission')
+            throw new Error(err)
+        }
+    }
+
+    /**
      * send mail
      * @returns {Promise<void>}
      */
     async send() {
         try {
             let transporter = nodemailer.createTransport(this.smtpOptions)
-            await this._createTimingMission(() => {
+            this.timingMission = await this._createTimingMission(() => {
                 transporter.sendMail(this.options, (err, msg) => {
                     if (err) {
                         console.log(this.options)

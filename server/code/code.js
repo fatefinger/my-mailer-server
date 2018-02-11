@@ -7,8 +7,9 @@ const missionCode = {
     ERROR_MISSION_INPUT: '任务创建失败： 1000',
 
     GET_MISSION_SUCCESS: '获取列表信息成功',
-    CREATE_MISSION_SUCCESS: '创建任务成功'
-
+    CREATE_MISSION_SUCCESS: '创建任务成功',
+    REMOVE_MISSION_SUCCESS: '删除任务成功',
+    UPDATE_MISSION_SUCCESS: '更新任务成功'
 }
 
 module.exports = missionCode

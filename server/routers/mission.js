@@ -6,9 +6,9 @@ const missionController = require('./../controllers/mission')
 
 const routers = router
     .get('/', missionController.getMissionList)
-    // .delete('/mission', missionController.deleteMission)
+    .delete('/mission', missionController.removeMission)
     .post('/', missionController.createMission)
-    // .update('/mission', missionController.updateMission)
+    .put('/mission', missionController.updateMission)
 
 
 module.exports = routers
