@@ -131,15 +131,13 @@ const actions = {
    * @returns {Promise<any>}
    */
   async removeMission({commit, state}, mission) {
-    return new Promise((resolve, reject) => {
       try {
         let res = await api.removeMission(mission.id)
         commit('REMOVE_MISSION', mission.id)
-        resolve(true)
+        return true
       } catch (err) {
-        reject(err)
+        throw new Error(err)
       }
-    })
   },
   /**
    * update mission
@@ -149,15 +147,13 @@ const actions = {
    * @returns {Promise<any>}
    */
   async updateMission({commit, state}, mission) {
-    return new Promise((resolve, reject) => {
       try {
         let res = await api.updateMission(mission)
         commit('UPDATE_MISSION', mission)
-        resolve(true)
+        return true
       } catch (err) {
-        reject(err)
+        throw new Error(err)
       }
-    })
   },
   /**
    * add new mission to state.missions

@@ -95,6 +95,7 @@ module.exports = {
                 data: null
             }
             let tmp = await missionService.deleteMissionById(id)
+            MissionPool.cancelMission(id)
             result.success = true
             result.message = missionCode.REMOVE_MISSION_SUCCESS
             result.data = tmp
@@ -134,16 +135,15 @@ module.exports = {
                 attachments: formData.attachments,
                 sendTime: new Date(formData.sendTime)
             }
-            let mission = new Mailer()
-            await mission.init(missionData)
-            await mission.send()
+
             let tmp = await missionService.updateMissionById(missionData, formData.id)
+            MissionPool.updateMission(tmp.id, missionData)
             result.success = true
             result.message = missionCode.UPDATE_MISSION_SUCCESS
             result.data = tmp
             ctx.body = result
         } catch (err) {
-
+            throw new Error(err)
         }
     }
 

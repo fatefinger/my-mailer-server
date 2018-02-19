@@ -178,11 +178,19 @@
       async close () {
         this.modalVisiable = false
       },
-      async editHandle () {
-
+      async editHandle (data) {
+        try {
+          await this.updateMission(data)
+        } catch (err) {
+          this.$Message.error(`update mission: ${err}`)
+        }
       },
-      async removeHandle () {
-
+      async removeHandle (data) {
+        try {
+          await this.removeMission(data)
+        } catch (err) {
+          this.$Message.error(`remove mission: ${err}`)
+        }
       }
     },
     beforeMount () {

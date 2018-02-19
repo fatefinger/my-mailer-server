@@ -30,20 +30,36 @@ class MissionPool {
         }
     }
 
-    async cancelMission(data) {
+    /**
+     * 取消任务
+     * @param id
+     * @return {Promise<void>}
+     */
+    async cancelMission(id) {
         try {
-
-            let mission = this._getMissionById(id)
+            let mission = this._getMissionById(id).data
+            mission.cancel()
+            console.log(`定时任务取消：${id}`)
         } catch (err) {
-
+            console.log(`定时任务取消出错：${id}`)
+            throw new Error(err)
         }
     }
 
-    async updateMission(data) {
+    /**
+     * 更新任务
+     * @param id
+     * @param data
+     * @return {Promise<void>}
+     */
+    async updateMission(id, data) {
         try {
-
+            await this.cancelMission(id)
+            await this.createMission(data)
         } catch (err) {
-
+            console.log('创建新任务出错')
+            console.log(data)
+            throw new Error(err)
         }
     }
 
@@ -58,17 +74,10 @@ class MissionPool {
                 return (item.id === id )
             })
         } catch (err) {
-
+            console.log('获取任务出错')
+            console.log(id)
+            throw new Error(err)
         }
-    }
-
-    /**
-     * this.missionNumber update
-     * @return {number}
-     * @private
-     */
-    _updateId() {
-        return this.missionNumber++
     }
 }
 

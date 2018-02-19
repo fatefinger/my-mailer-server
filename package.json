@@ -4,7 +4,6 @@
   "description": "my-mailer v2",
   "main": "init/index.js",
   "scripts": {
-    "test": "standard & node test/test.js",
     "init_sql": "node ./init/index.js",
     "dev_server": "nodemon --harmony ./server/app",
     "start_server": "node ./server/app.js"

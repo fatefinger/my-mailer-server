@@ -2,7 +2,7 @@
  * Created by 杨帆 on 2018/1/30.
  */
 const missionService = require('./../services/mission')
-const Mail = require('./../utils/mailer')
+const MissionPool = require('./../utils/mission-pool')
 
 
 module.exports = {
@@ -12,6 +12,7 @@ module.exports = {
         if (missionList.length !== 0) {
             for (let item of missionList) {
                 let missionData = {
+                    id: item.id,
                     from: item.from,
                     to: item.to,
                     cc: item.cc,
@@ -21,9 +22,7 @@ module.exports = {
                     attachments: item.attachments,
                     sendTime: new Date(item.sendTime)
                 }
-                let mission = new Mail()
-                await mission.init(missionData)
-                await mission.send()
+                MissionPool.createMission(missionData)
                 console.log(`任务建立成功`)
                 console.log(missionData)
             }
